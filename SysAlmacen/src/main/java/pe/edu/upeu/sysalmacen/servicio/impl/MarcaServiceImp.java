@@ -19,5 +19,8 @@ public class MarcaServiceImp extends CrudGenericoServiceImp<Marca, Long> impleme
         return repo;
     }
 
-
+    @Override
+    public Long periodoIdMax() {
+        return repo.maxID().get();
+    }
 }

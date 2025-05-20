@@ -73,4 +73,10 @@ public class MarcaController {
 
         return resource;
     }*/
+
+    @GetMapping("/buscarmaxid")
+    public ResponseEntity<Long> getMarcaMaxId() {
+        Long idMax = marcaService.periodoIdMax();
+        return ResponseEntity.ok(idMax);
+    }
 }
