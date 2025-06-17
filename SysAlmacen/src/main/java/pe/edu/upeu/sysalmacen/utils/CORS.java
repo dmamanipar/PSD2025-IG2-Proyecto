@@ -23,7 +23,7 @@ public class CORS implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
 
         String origin = request.getHeader("Origin");
-        if (origin != null && (origin.startsWith("http://192.168.1.39") || origin.startsWith("http://localhost")  )) {
+        if (origin != null && (origin.startsWith("http://172.22.2.50") || origin.startsWith("http://localhost")  )) {
             response.setHeader("Access-Control-Allow-Origin", origin);
             response.setHeader("Access-Control-Allow-Credentials", "true");
         }
