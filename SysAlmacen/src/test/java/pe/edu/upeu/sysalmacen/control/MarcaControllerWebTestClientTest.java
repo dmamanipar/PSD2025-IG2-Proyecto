@@ -9,21 +9,22 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.transaction.annotation.Transactional;
-
 import pe.edu.upeu.sysalmacen.dtos.UsuarioDTO;
 import pe.edu.upeu.sysalmacen.modelo.Marca;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) //Permite que el BeforeEach se ejecute una sola vez
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) //Permite que el  se ejecute una sola vez BeforeEach
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@SpringBootTest(webEnvironment =SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 public class MarcaControllerWebTestClientTest {
     @LocalServerPort
     private int port;
     @Autowired
     private WebTestClient webTestClient;
+
     private String token;
     Logger logger = Logger.getLogger(MarcaControllerWebTestClientTest.class.getName());
     Marca marca;
@@ -38,24 +39,21 @@ public class MarcaControllerWebTestClientTest {
             var dd = webTestClient.post()
                     .uri("/users/login")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .bodyValue(new
-                            UsuarioDTO.CredencialesDto("eliasmp@upeu.edu.pe",
-                            "Da123456*".toCharArray()))//.toCharArray()
+                    .bodyValue(new UsuarioDTO.CredencialesDto("eliasmp@upeu.edu.pe", "Da123456*".toCharArray()))//.toCharArray()
                     .exchange()
                     .expectBody(String.class)
                     .returnResult()
                     .getResponseBody();
             JSONObject jsonObj = new JSONObject(dd);
             if (jsonObj.length() > 1) {
-                token =jsonObj.getString("token")!=null?jsonObj.getString("token"):null;
+                token = jsonObj.getString("token")!=null?jsonObj.getString("token"):null;
             }
         } catch (JSONException e) {
             System.out.println("saliooooo:" + e.getMessage());
             if (token == null) {
                 webTestClient.post()
                         .uri("/users/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .bodyValue(udto)//.toCharArray()
+                        .contentType(MediaType.APPLICATION_JSON).bodyValue(udto)//.toCharArray()
                         .exchange()
                         .expectStatus().isCreated()
                         .expectBody(String.class)
@@ -120,7 +118,9 @@ public class MarcaControllerWebTestClientTest {
     @Order(3)
     public void testActualizarMarca() {
         Marca marcax = Marca.builder().nombre("AdidasY").build();
-        Long datoBuscado = webTestClient.get().uri("http://localhost:" + this.port + "/marcas/buscarmaxid")
+
+        Long datoBuscado = webTestClient.get().uri("http://localhost:" +
+                        this.port + "/marcas/buscarmaxid")
                 .header("Authorization", "Bearer " + token)
                 .exchange()
                 .expectStatus().isOk()
@@ -148,6 +148,7 @@ public class MarcaControllerWebTestClientTest {
                 .expectBody(Long.class)
                 .returnResult()
                 .getResponseBody();
+
         webTestClient.get().uri("http://localhost:" + this.port +
                         "/marcas/{id}", datoBuscado)
                 .header("Authorization", "Bearer " + token)
@@ -177,4 +178,6 @@ public class MarcaControllerWebTestClientTest {
                 .exchange()
                 .expectStatus().isOk();
     }
+
+
 }

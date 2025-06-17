@@ -1,5 +1,4 @@
 package pe.edu.upeu.sysalmacen.control;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -10,14 +9,15 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import pe.edu.upeu.sysalmacen.dtos.UsuarioDTO;
 import pe.edu.upeu.sysalmacen.modelo.Marca;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@SpringBootTest(webEnvironment =SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureTestDatabase(replace =AutoConfigureTestDatabase.Replace.NONE)
+@SpringBootTest(webEnvironment =
+        SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureTestDatabase(replace =
+        AutoConfigureTestDatabase.Replace.NONE)
 @Slf4j
 public class MarcaControllerIntegrateTest {
     @Autowired
@@ -36,7 +36,9 @@ public class MarcaControllerIntegrateTest {
         try {
             token = given()
                     .contentType(ContentType.JSON)
-                    .body(new UsuarioDTO.CredencialesDto("eliasmp@upeu.edu.pe", "Da123456*".toCharArray())) //.toCharArray()
+                    .body(new
+                            UsuarioDTO.CredencialesDto("eliasmp@upeu.edu.pe",
+                            "Da123456*".toCharArray())) //.toCharArray()
                     .when().post("/users/login")
                     .andReturn().jsonPath().getString("token");
         }catch (Exception e){
@@ -114,7 +116,6 @@ public class MarcaControllerIntegrateTest {
                 .body("idMarca", equalTo(Integer.parseInt(idCreado)))
                 .body("nombre", equalTo("Marca actualizada"));
     }
-
     @Order(6)
     @Test
     void testDelete() {
@@ -127,6 +128,7 @@ public class MarcaControllerIntegrateTest {
                 .statusCode(HttpStatus.SC_OK)
                 .body("message", equalTo("true"));
     }
+
     @Order(5)
     @Test
     void testGetMarcaMaxId() {
@@ -139,4 +141,5 @@ public class MarcaControllerIntegrateTest {
                 .extract().body().asString();
         Assertions.assertNotNull(idCreado);
     }
+
 }

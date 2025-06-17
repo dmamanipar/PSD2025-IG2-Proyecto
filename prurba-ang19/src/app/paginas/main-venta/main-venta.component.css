@@ -1,0 +1,15 @@
+.form-field-spacing {
+  margin: 6px;
+
+  margin-bottom: -1.25em; /* Ajusta este valor según sea necesario */
+}
+
+.div-field-spacing-general {
+  margin-left: 16px;
+  margin-right: 10px;
+}
+mat-grid-tile {
+  background: lightsalmon;
+}
+
+
